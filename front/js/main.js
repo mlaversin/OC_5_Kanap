@@ -1,5 +1,8 @@
 main();
 
+/*
+ * Displays all articles on the homepage.
+ */
 async function main() {
   const articles = await getArticles();
   for (article of articles) {
@@ -7,10 +10,14 @@ async function main() {
   }
 }
 
+/*
+ * Retrieves the list of articles from the API.
+ */
 async function getArticles() {
-  return fetch('http://localhost:3000/api/products')
-    .then((httpBodyResponse) => {
-      return httpBodyResponse.json();
+  const url = 'http://localhost:3000/api/products';
+  return fetch(url)
+    .then((response) => {
+      return response.json();
     })
     .then((articles) => {
       return articles;
@@ -20,6 +27,9 @@ async function getArticles() {
     });
 }
 
+/*
+ * Displays an article in the DOM.
+ */
 function displayArticle() {
   document.getElementById('items').innerHTML += `
     <a href="./product.html?id=${article._id}">
