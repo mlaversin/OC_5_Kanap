@@ -14,17 +14,16 @@ async function main() {
  * Retrieves the list of articles from the API.
  */
 async function getArticles() {
-  const url = 'http://localhost:3000/api/products';
-  return fetch(url)
-    .then((response) => {
-      return response.json();
+  const data = await fetch('http://localhost:3000/api/products')
+    .then((res) => {
+      if (res.ok) {
+        return res.json().then((data) => data);
+      } else {
+        console.log('HTTP error with the url ' + res.url);
+      }
     })
-    .then((articles) => {
-      return articles;
-    })
-    .catch((e) => {
-      console.log(e);
-    });
+    .catch((e) => console.log(e));
+  return data;
 }
 
 /*
