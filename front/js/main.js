@@ -1,19 +1,20 @@
 main();
 
 /*
- * Displays all articles on the homepage.
+ * Displays all products on the homepage.
  */
 async function main() {
-  const articles = await getArticles();
-  for (article of articles) {
-    displayArticle(article);
+  const products = await getProducts();
+  for (product of products) {
+    displayProduct(product);
   }
 }
 
 /*
- * Retrieves the list of articles from the API.
+ * Retrieves the list of products from the API.
+ * @returns {Promise} Promise object represents list of all produts
  */
-async function getArticles() {
+async function getProducts() {
   const data = await fetch('http://localhost:3000/api/products')
     .then((res) => {
       if (res.ok) {
@@ -27,15 +28,16 @@ async function getArticles() {
 }
 
 /*
- * Displays an article in the DOM.
+ * Displays a single product in the DOM.
+ * @params {Object[]} product - The product you want to display
  */
-function displayArticle() {
+function displayProduct(product) {
   document.getElementById('items').innerHTML += `
-    <a href="./product.html?id=${article._id}">
+    <a href="./product.html?id=${product._id}">
       <article>
-        <img src="${article.imageUrl}" alt="${article.altTxt}">
-        <h3 class="productName">${article.name}</h3>
-        <p class="productDescription">${article.description}</p>
+        <img src="${product.imageUrl}" alt="${product.altTxt}">
+        <h3 class="productName">${product.name}</h3>
+        <p class="productDescription">${product.description}</p>
       </article>
     </a>`;
 }
