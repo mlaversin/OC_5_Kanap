@@ -1,14 +1,6 @@
-main();
-
 /*
- * Displays all products on the homepage.
+ * This file manages the display of all the products on the home page
  */
-async function main() {
-  const products = await getProducts();
-  for (let i=0; i<products.length; i++) {
-    displayProduct(products[i]);
-  }
-}
 
 /*
  * Retrieves the list of products from the API.
@@ -35,9 +27,21 @@ function displayProduct(product) {
   document.getElementById('items').innerHTML += `
     <a href="./product.html?id=${product._id}">
       <article>
-        <img src="${product.imageUrl}" alt="${product.altTxt}">
-        <h3 class="productName">${product.name}</h3>
-        <p class="productDescription">${product.description}</p>
+      <img src="${product.imageUrl}" alt="${product.altTxt}">
+      <h3 class="productName">${product.name}</h3>
+      <p class="productDescription">${product.description}</p>
       </article>
-    </a>`;
+      </a>`;
 }
+
+/*
+ * Displays all products on the homepage.
+ */
+async function main() {
+  const products = await getProducts();
+  for (let i = 0; i < products.length; i++) {
+    displayProduct(products[i]);
+  }
+}
+
+main();
