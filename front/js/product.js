@@ -1,5 +1,5 @@
 /*
- * This file handles two things :
+ * This file handles two things on the Product page :
  *    - display of product details on the product page
  *    - adding the product to cart
  */
