@@ -5,8 +5,8 @@ main();
  */
 async function main() {
   const products = await getProducts();
-  for (product of products) {
-    displayProduct(product);
+  for (let i=0; i<products.length; i++) {
+    displayProduct(products[i]);
   }
 }
 
