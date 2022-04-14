@@ -1,5 +1,5 @@
 /*
- * This file handles two things in the Shopping Cart page :
+ * This file manages :
  *    - displaying products added to the cart
  *    - modifying and deleting products
  */
@@ -66,13 +66,33 @@ async function displayItem(item) {
 }
 
 /*
- * Displays the products in the cart.
+ * Displays all items in the DOM.
+ * @params {Object[]} item - The list of items you want to display
  */
-async function displayCart() {
-  const cartItems = await getCart();
-  for (let i = 0; i < cartItems.length; i++) {
-    displayItem(cartItems[i]);
+async function displayCart(items) {
+  for (let i = 0; i < items.length; i++) {
+    displayItem(items[i]);
   }
 }
 
-displayCart();
+async function getTotalPrice(items) {
+  let totalPrice = 0;
+  for (let i = 0; i < items.length; i++) {
+    const product = await getProduct(items[i].id);
+    totalPrice += items[i].quantity * product.price;
+  }
+  return totalPrice;
+}
+
+async function main() {
+  const cartItems = getCart();
+  const totalQuantity = cartItems.length;
+  const totalPrice = await getTotalPrice(cartItems);
+
+  document.getElementById('totalQuantity').innerText = totalQuantity;
+  document.getElementById('totalPrice').innerText = totalPrice;
+
+  displayCart(cartItems);
+}
+
+main();
