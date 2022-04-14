@@ -60,7 +60,7 @@ const products = [
     altTxt: "Photo d'un canapé gris, deux places",
   },
   {
-    colors: ['Gris', 'Argenté'],
+    colors: ['Rouge', 'Argenté'],
     _id: '034707184e8e4eefb46400b5a3774b5f',
     name: 'Kanap Thyoné',
     price: 1999,
@@ -70,7 +70,7 @@ const products = [
     altTxt: "Photo d'un canapé rouge, deux places",
   },
   {
-    colors: ['Rose', 'Marron', 'Jaune', 'Blanc'],
+    colors: ['Rose', 'Brun', 'Jaune', 'Blanc'],
     _id: 'a6ec5b49bd164d7fbe10f37b6363f9fb',
     name: 'Kanap Orthosie',
     price: 3999,
