@@ -1,3 +1,5 @@
+import { getValidForm } from './form.js';
+
 /*
  * This file manages :
  *    - displaying products added to the cart
@@ -193,6 +195,8 @@ async function main() {
 
   changeQuantity(cart);
   deleteItem(cart);
+
+  getValidForm();
 }
 
 main();
