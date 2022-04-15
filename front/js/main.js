@@ -7,7 +7,7 @@
  * @returns {Promise} Promise object represents list of all produts
  */
 async function getProducts() {
-  const data = await fetch('http://localhost:3000/api/products')
+  const data = fetch('http://localhost:3000/api/products')
     .then((res) => {
       if (res.ok) {
         return res.json().then((data) => data);
@@ -24,14 +24,29 @@ async function getProducts() {
  * @params {Object[]} product - The product you want to display
  */
 function displayProduct(product) {
-  document.getElementById('items').innerHTML += `
-    <a href="./product.html?id=${product._id}">
-      <article>
-      <img src="${product.imageUrl}" alt="${product.altTxt}">
-      <h3 class="productName">${product.name}</h3>
-      <p class="productDescription">${product.description}</p>
-      </article>
-      </a>`;
+
+
+  let anchor = document.createElement('a');
+  document.getElementById('items').appendChild(anchor);
+  anchor.href = `./product.html?id=${product._id}`;
+
+  let article = document.createElement('article');
+  anchor.appendChild(article);
+
+  let image = document.createElement('img');
+  article.appendChild(image);
+  image.src = product.imageUrl;
+  image.alt = product.altTxt;
+
+  let name = document.createElement('h3');
+  article.appendChild(name);
+  name.classList.add('productName');
+  name.textContent = product.name;
+
+  let description = document.createElement('p');
+  article.appendChild(description);
+  description.classList.add('productDescription');
+  description.textContent = product.description;
 }
 
 /*

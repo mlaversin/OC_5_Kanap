@@ -10,7 +10,7 @@
  * @returns {Promise} Promise object represents the product to display
  */
 async function getProduct(productId) {
-  const data = await fetch(`http://localhost:3000/api/products/${productId}`)
+  const data = fetch(`http://localhost:3000/api/products/${productId}`)
     .then((res) => {
       if (res.ok) {
         return res.json().then((data) => data);
@@ -41,33 +41,74 @@ function getCart() {
 async function displayItem(item) {
   const product = await getProduct(item.id);
 
-  document.getElementById('cart__items').innerHTML += `
-    <article class="cart__item" data-id="${item.id}" data-color="${item.id}">
-    <div class="cart__item__img">
-      <img src="${product.imageUrl}" alt="${product.altTxt}">
-    </div>
-    <div class="cart__item__content">
-      <div class="cart__item__content__description">
-        <h2>${product.name}</h2>
-        <p>${item.color}</p>
-        <p>${product.price} €</p>
-      </div>
-      <div class="cart__item__content__settings">
-        <div class="cart__item__content__settings__quantity">
-          <p>Qté : </p>
-          <input type="number" class="itemQuantity" name="itemQuantity" min="1" max="100" value="${item.quantity}">
-        </div>
-        <div class="cart__item__content__settings__delete">
-          <p class="deleteItem">Supprimer</p>
-        </div>
-      </div>
-    </div>
-  </article>`;
+  let article = document.createElement('article');
+  document.querySelector('#cart__items').appendChild(article);
+  article.className = 'cart__item';
+  article.setAttribute('data-id', item.id);
+
+  let imgDiv = document.createElement('div');
+  article.appendChild(imgDiv);
+  imgDiv.className = 'cart__item__img';
+
+  let image = document.createElement('img');
+  imgDiv.appendChild(image);
+  image.src = product.imageUrl;
+  image.alt = product.altTxt;
+
+  let contentDiv = document.createElement('div');
+  article.appendChild(contentDiv);
+  contentDiv.className = 'cart__item__content';
+
+  let descDiv = document.createElement('div');
+  contentDiv.appendChild(descDiv);
+  descDiv.className = 'cart__item__content__description';
+
+  let title = document.createElement('h2');
+  descDiv.appendChild(title);
+  title.textContent = product.name;
+
+  let color = document.createElement('p');
+  descDiv.appendChild(color);
+  color.textContent = item.color;
+
+  let price = document.createElement('p');
+  descDiv.appendChild(price);
+  price.textContent = product.price + ' €';
+
+  let settingsDiv = document.createElement('div');
+  contentDiv.appendChild(settingsDiv);
+  settingsDiv.className = 'cart__item__content__settings';
+
+  let quantityDiv = document.createElement('div');
+  settingsDiv.appendChild(quantityDiv);
+  quantityDiv.className = 'cart__item__content__settings__quantity';
+
+  let quantityTag = document.createElement('p');
+  quantityDiv.appendChild(quantityTag);
+  quantityTag.textContent = 'Qté : ';
+
+  let quantity = document.createElement('input');
+  quantityDiv.appendChild(quantity);
+  quantity.value = item.quantity;
+  quantity.className = 'itemQuantity';
+  quantity.setAttribute('type', 'number');
+  quantity.setAttribute('min', '1');
+  quantity.setAttribute('max', '100');
+  quantity.setAttribute('name', 'itemQuantity');
+
+  let deleteDiv = document.createElement('div');
+  settingsDiv.appendChild(deleteDiv);
+  deleteDiv.className = 'cart__item__content__settings__delete';
+
+  let deleteBtn = document.createElement('p');
+  deleteDiv.appendChild(deleteBtn);
+  deleteBtn.className = 'deleteItem';
+  deleteBtn.textContent = 'Supprimer';
 }
 
 /*
  * Displays all items in the DOM.
- * @params {Object[]} item - The list of items you want to display
+ * @params {Object[]} items - The list of items you want to display
  */
 async function displayCart(items) {
   for (let i = 0; i < items.length; i++) {
@@ -75,6 +116,10 @@ async function displayCart(items) {
   }
 }
 
+/*
+ * Calculates the total price of the cart.
+ * @params {Object[]} item - The list of items in the cart
+ */
 async function getTotalPrice(items) {
   let totalPrice = 0;
   for (let i = 0; i < items.length; i++) {

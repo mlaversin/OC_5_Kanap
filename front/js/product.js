@@ -43,16 +43,37 @@ async function displayProduct() {
   const product = await getProduct(productId);
 
   document.title = `${product.name} | Kanap`;
-  document.getElementById('item__img').innerHTML = `
-    <img src="${product.imageUrl}" alt="${product.altTxt}">`;
-  document.getElementById('title').innerText = product.name;
-  document.getElementById('price').innerText = product.price;
-  document.getElementById('description').innerText = product.description;
+  // document.getElementById('item__img').innerHTML = `
+  //   <img src="${product.imageUrl}" alt="${product.altTxt}">`;
+  // document.getElementById('title').innerText = product.name;
+  // document.getElementById('price').innerText = product.price;
+  // document.getElementById('description').innerText = product.description;
 
-  for (color in product.colors) {
-    document.getElementById(
-      'colors'
-    ).innerHTML += `<option value="${product.colors[color]}">${product.colors[color]}</option>`;
+  // for (color in product.colors) {
+  //   document.getElementById(
+  //     'colors'
+  //   ).innerHTML += `<option value="${product.colors[color]}">${product.colors[color]}</option>`;
+  // }
+
+  let image = document.createElement('img');
+  document.querySelector('.item__img').appendChild(image);
+  image.src = product.imageUrl;
+  image.alt = product.altTxt;
+
+  let name = document.getElementById('title');
+  name.textContent = product.name;
+
+  let price = document.getElementById('price');
+  price.textContent = product.price;
+
+  let description = document.getElementById('description');
+  description.textContent = product.description;
+
+  for (let color of product.colors) {
+    let productColor = document.createElement('option');
+    document.querySelector('#colors').appendChild(productColor);
+    productColor.value = color;
+    productColor.textContent = color;
   }
 }
 
