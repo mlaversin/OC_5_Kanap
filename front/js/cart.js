@@ -35,7 +35,7 @@ function getCart() {
 }
 
 /*
- * Displays a single item in the DOM.
+ * Model for displaying a cart item in the DOM
  * @params {Object[]} item - The item you want to display
  */
 async function displayItem(item) {
@@ -45,6 +45,7 @@ async function displayItem(item) {
   document.querySelector('#cart__items').appendChild(article);
   article.className = 'cart__item';
   article.setAttribute('data-id', item.id);
+  article.setAttribute('data-color', item.color);
 
   let imgDiv = document.createElement('div');
   article.appendChild(imgDiv);
@@ -107,24 +108,24 @@ async function displayItem(item) {
 }
 
 /*
- * Displays all items in the DOM.
- * @params {Object[]} items - The list of items you want to display
+ * Displays all  cart items in the DOM.
+ * @params {Object[]} cart - The list of items you want to display
  */
-async function displayCart(items) {
-  for (let i = 0; i < items.length; i++) {
-    displayItem(items[i]);
+async function displayCart(cart) {
+  for (let i = 0; i < cart.length; i++) {
+    displayItem(cart[i]);
   }
 }
 
 /*
  * Calculates the quantity of items in the cart.
- * @params {Object[]} item - The list of items in the cart
+ * @params {Object[]} cart - The list of items in the cart
  */
-async function getTotalQuantity(items) {
+async function getTotalQuantity(cart) {
   let totalQuantity = 0;
-  for (let i = 0; i < items.length; i++) {
-    const product = await getProduct(items[i].id);
-    totalQuantity += items[i].quantity;
+  for (let i = 0; i < cart.length; i++) {
+    const product = await getProduct(cart[i].id);
+    totalQuantity += cart[i].quantity;
   }
   document.getElementById('totalQuantity').textContent = totalQuantity;
 }
@@ -133,21 +134,65 @@ async function getTotalQuantity(items) {
  * Calculates the total price of the cart.
  * @params {Object[]} item - The list of items in the cart
  */
-async function getTotalPrice(items) {
+async function getTotalPrice(cart) {
   let totalPrice = 0;
-  for (let i = 0; i < items.length; i++) {
-    const product = await getProduct(items[i].id);
-    totalPrice += items[i].quantity * product.price;
+  for (let i = 0; i < cart.length; i++) {
+    const product = await getProduct(cart[i].id);
+    totalPrice += cart[i].quantity * product.price;
   }
   document.getElementById('totalPrice').textContent = totalPrice;
 }
 
-async function main() {
-  const cartItems = getCart();
+/*
+ * Change the quantity of an item in the cart
+ * @params {Object[]} cart - The list of items in the cart
+ */
+function changeQuantity(cart) {
+  let inputs = document.querySelectorAll('.itemQuantity');
+  for (let i = 0; i < inputs.length; i++) {
+    inputs[i].addEventListener('change', (e) => {
+      let newQuantity = inputs[i].valueAsNumber;
 
-  displayCart(cartItems);
-  await getTotalQuantity(cartItems);
-  await getTotalPrice(cartItems);
+      let itemId = e.target.closest('.cart__item').dataset.id;
+      let itemColor = e.target.closest('.cart__item').dataset.color;
+
+      let prevItem = cart.find((p) => p.id == itemId && p.color == itemColor);
+      console.log(prevItem);
+      prevItem.quantity = newQuantity;
+      localStorage.setItem('cart', JSON.stringify(cart));
+      location.reload();
+    });
+  }
+}
+
+/*
+ * Remove an item in the cart
+ * @params {Object[]} cart - The list of items in the cart
+ */
+function deleteItem(cart) {
+  let deleteBtn = document.querySelectorAll('.deleteItem');
+  for (let i = 0; i < deleteBtn.length; i++) {
+    deleteBtn[i].addEventListener('click', (e) => {
+      let itemId = e.target.closest('.cart__item').dataset.id;
+      let itemColor = e.target.closest('.cart__item').dataset.color;
+
+      cart = cart.filter((p) => p.id !== itemId || p.color !== itemColor);
+      localStorage.setItem('cart', JSON.stringify(cart));
+      location.reload();
+    });
+  }
+}
+
+async function main() {
+  const cart = getCart();
+
+  displayCart(cart);
+
+  await getTotalQuantity(cart);
+  await getTotalPrice(cart);
+
+  changeQuantity(cart);
+  deleteItem(cart);
 }
 
 main();
