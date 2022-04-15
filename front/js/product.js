@@ -43,17 +43,6 @@ async function displayProduct() {
   const product = await getProduct(productId);
 
   document.title = `${product.name} | Kanap`;
-  // document.getElementById('item__img').innerHTML = `
-  //   <img src="${product.imageUrl}" alt="${product.altTxt}">`;
-  // document.getElementById('title').innerText = product.name;
-  // document.getElementById('price').innerText = product.price;
-  // document.getElementById('description').innerText = product.description;
-
-  // for (color in product.colors) {
-  //   document.getElementById(
-  //     'colors'
-  //   ).innerHTML += `<option value="${product.colors[color]}">${product.colors[color]}</option>`;
-  // }
 
   let image = document.createElement('img');
   document.querySelector('.item__img').appendChild(image);

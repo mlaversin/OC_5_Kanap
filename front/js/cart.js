@@ -117,6 +117,19 @@ async function displayCart(items) {
 }
 
 /*
+ * Calculates the quantity of items in the cart.
+ * @params {Object[]} item - The list of items in the cart
+ */
+async function getTotalQuantity(items) {
+  let totalQuantity = 0;
+  for (let i = 0; i < items.length; i++) {
+    const product = await getProduct(items[i].id);
+    totalQuantity += items[i].quantity;
+  }
+  document.getElementById('totalQuantity').textContent = totalQuantity;
+}
+
+/*
  * Calculates the total price of the cart.
  * @params {Object[]} item - The list of items in the cart
  */
@@ -126,18 +139,15 @@ async function getTotalPrice(items) {
     const product = await getProduct(items[i].id);
     totalPrice += items[i].quantity * product.price;
   }
-  return totalPrice;
+  document.getElementById('totalPrice').textContent = totalPrice;
 }
 
 async function main() {
   const cartItems = getCart();
-  const totalQuantity = cartItems.length;
-  const totalPrice = await getTotalPrice(cartItems);
-
-  document.getElementById('totalQuantity').innerText = totalQuantity;
-  document.getElementById('totalPrice').innerText = totalPrice;
 
   displayCart(cartItems);
+  await getTotalQuantity(cartItems);
+  await getTotalPrice(cartItems);
 }
 
 main();
