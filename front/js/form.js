@@ -6,7 +6,9 @@
 function getValidForm() {
   const charRegex = new RegExp("^[a-zA-Zâéèêëïöîôç '-]+$");
   const addressRegex = new RegExp("^[0-9a-zA-Zàâäéèêëïîôöùûüç '-]+$");
-  const emailRegex = new RegExp('^[a-zA-Z0-9.-_]+[@]{1}[a-zA-Z0-9.-_]+[.]{1}[a-z]{2,10}$');
+  const emailRegex = new RegExp(
+    '^[a-zA-Z0-9.-_]+[@]{1}[a-zA-Z0-9.-_]+[.]{1}[a-z]{2,10}$'
+  );
 
   let firstNameValid = false;
   const firstName = document.getElementById('firstName');
@@ -64,8 +66,7 @@ function getValidForm() {
   if (!email.value) {
     emailErrorMsg.textContent = 'Ce champ est obigatoire.';
   } else if (!emailRegex.test(email.value)) {
-    emailErrorMsg.textContent =
-      'Veuillez utiliser uniquement les caractères autorisés.';
+    emailErrorMsg.textContent = 'Veuillez saisir une adresse email valide.';
   } else {
     emailErrorMsg.textContent = '';
     emailValid = true;
@@ -79,11 +80,11 @@ function getValidForm() {
     emailValid
   ) {
     const contact = {
-      firstName: firstName.value,
-      lastName: lastName.value,
-      address: address.value,
-      city: city.value,
-      email: email.value,
+      firstName: firstName.value.trim(),
+      lastName: lastName.value.trim(),
+      address: address.value.trim(),
+      city: city.value.trim(),
+      email: email.value.trim(),
     };
 
     return contact;
