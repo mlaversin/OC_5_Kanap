@@ -26,6 +26,7 @@ async function getProduct(productId) {
 
 /*
  * Get cart information from LocalStorage.
+ * @rturns {Object[]} cart - The list of items in the cart
  */
 function getCart() {
   let cart = localStorage.getItem('cart');
@@ -185,6 +186,44 @@ function deleteItem(cart) {
   }
 }
 
+/*
+ * Sends a POST request to the API containing the ordered product IDs and customer form data
+ * @params {Object[]} cart - The list of items in the cart
+ */
+function order(cart) {
+  const orderButton = document.getElementById('order');
+  orderButton.addEventListener('click', (e) => {
+    e.preventDefault();
+
+    const contact = getValidForm();
+
+    if (contact != undefined) {
+      let products = [];
+      products = cart.map((p) => p.id);
+
+      const order = { contact, products };
+
+      fetch('http://localhost:3000/api/products/order', {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(order),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          window.location.href = `/front/html/confirmation.html?commande=${data.orderId}`;
+        })
+        .catch(function (err) {
+          console.log(err);
+        });
+
+      localStorage.clear();
+    }
+  });
+}
+
 async function main() {
   const cart = getCart();
 
@@ -196,7 +235,7 @@ async function main() {
   changeQuantity(cart);
   deleteItem(cart);
 
-  getValidForm();
+  order(cart);
 }
 
 main();

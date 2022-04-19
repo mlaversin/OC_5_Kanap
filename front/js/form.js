@@ -1,62 +1,93 @@
+/*
+ * Checks if contact form fields are present and valid.
+ * @returns {Object[]} contact - object represents the customer form data
+ */
+
 function getValidForm() {
   const charRegex = new RegExp("^[a-zA-Zâéèêëïöîôç '-]+$");
   const addressRegex = new RegExp("^[0-9a-zA-Zàâäéèêëïîôöùûüç '-]+$");
-  const emailRegex = new RegExp(
-    '^[a-zA-Z0-9.-_]+[@]{1}[a-zA-Z0-9.-_]+[.]{1}[a-z]{2,10}$'
-  );
+  const emailRegex = new RegExp('^[a-zA-Z0-9.-_]+[@]{1}[a-zA-Z0-9.-_]+[.]{1}[a-z]{2,10}$');
 
+  let firstNameValid = false;
   const firstName = document.getElementById('firstName');
   const firstNameErrorMsg = document.getElementById('firstNameErrorMsg');
-  firstName.addEventListener('input', (e) => {
-    if (charRegex.test(firstName.value) || !firstName.value) {
-      firstNameErrorMsg.textContent = '';
-    } else {
-      firstNameErrorMsg.textContent =
-        'Veuillez utiliser uniquement les caractères autorisés.';
-    }
-  });
+  if (!firstName.value) {
+    firstNameErrorMsg.textContent = 'Ce champ est obigatoire.';
+  } else if (!charRegex.test(firstName.value)) {
+    firstNameErrorMsg.textContent =
+      'Veuillez utiliser uniquement les caractères autorisés.';
+  } else {
+    firstNameErrorMsg.textContent = '';
+    firstNameValid = true;
+  }
 
+  let lastNameValid = false;
   const lastName = document.getElementById('lastName');
   const lastNameErrorMsg = document.getElementById('lastNameErrorMsg');
-  lastName.addEventListener('input', (e) => {
-    if (charRegex.test(lastName.value) || !lastName.value) {
-      lastNameErrorMsg.textContent = '';
-    } else {
-      lastNameErrorMsg.textContent =
-        'Veuillez utiliser uniquement les caractères autorisés.';
-    }
-  });
+  if (!lastName.value) {
+    lastNameErrorMsg.textContent = 'Ce champ est obigatoire.';
+  } else if (!charRegex.test(lastName.value)) {
+    lastNameErrorMsg.textContent =
+      'Veuillez utiliser uniquement les caractères autorisés.';
+  } else {
+    lastNameErrorMsg.textContent = '';
+    lastNameValid = true;
+  }
 
+  let addressValid = false;
   const address = document.getElementById('address');
   const addressErrorMsg = document.getElementById('addressErrorMsg');
-  address.addEventListener('change', (e) => {
-    if (addressRegex.test(address.value) || !address.value) {
-      addressErrorMsg.textContent = '';
-    } else {
-      addressErrorMsg.textContent = 'Veuillez saisir une adresse valide.';
-    }
-  });
+  if (!address.value) {
+    addressErrorMsg.textContent = 'Ce champ est obigatoire.';
+  } else if (!addressRegex.test(address.value)) {
+    addressErrorMsg.textContent = 'Veuillez saisir une adresse valide.';
+  } else {
+    addressErrorMsg.textContent = '';
+    addressValid = true;
+  }
 
+  let cityValid = false;
   const city = document.getElementById('city');
   const cityErrorMsg = document.getElementById('cityErrorMsg');
-  city.addEventListener('input', (e) => {
-    if (charRegex.test(city.value) || !city.value) {
-      cityErrorMsg.textContent = '';
-    } else {
-      cityErrorMsg.textContent =
-        'Veuillez utiliser uniquement les caractères autorisés.';
-    }
-  });
+  if (!city.value) {
+    cityErrorMsg.textContent = 'Ce champ est obigatoire.';
+  } else if (!charRegex.test(city.value)) {
+    cityErrorMsg.textContent = 'Ce champ comporte une erreur.';
+  } else {
+    cityErrorMsg.textContent = '';
+    cityValid = true;
+  }
 
+  let emailValid = false;
   const email = document.getElementById('email');
   const emailErrorMsg = document.getElementById('emailErrorMsg');
-  email.addEventListener('change', (e) => {
-    if (emailRegex.test(email.value) || !email.value) {
-      emailErrorMsg.textContent = '';
-    } else {
-      emailErrorMsg.textContent = 'Veuillez saisir une adresse email valide.';
-    }
-  });
+  if (!email.value) {
+    emailErrorMsg.textContent = 'Ce champ est obigatoire.';
+  } else if (!emailRegex.test(email.value)) {
+    emailErrorMsg.textContent =
+      'Veuillez utiliser uniquement les caractères autorisés.';
+  } else {
+    emailErrorMsg.textContent = '';
+    emailValid = true;
+  }
+
+  if (
+    firstNameValid &&
+    lastNameValid &&
+    addressValid &&
+    cityValid &&
+    emailValid
+  ) {
+    const contact = {
+      firstName: firstName.value,
+      lastName: lastName.value,
+      address: address.value,
+      city: city.value,
+      email: email.value,
+    };
+
+    return contact;
+  }
 }
 
 export { getValidForm };
