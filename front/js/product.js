@@ -93,12 +93,20 @@ function saveCart(cart) {
 }
 
 /*
+ * Displays a confirmation message when a product is added to the cart.
+ */
+function confirmation() {
+  const confirmationMessage = document.getElementById('confirmation');
+  confirmationMessage.classList.add('visible');
+}
+
+/*
  * Add the product to the cart
  */
 function addToCart() {
   const productId = getProductId();
-  const productColor = document.getElementById('colors').value;
-  const productQuantity = parseInt(document.getElementById('quantity').value);
+  let productColor = document.getElementById('colors').value;
+  let productQuantity = parseInt(document.getElementById('quantity').value);
 
   if (productQuantity > 0 && productColor) {
     let newItem = {
@@ -128,6 +136,7 @@ function addToCart() {
       return 0;
     });
     saveCart(cart);
+    confirmation();
   }
 }
 
@@ -135,3 +144,9 @@ displayProduct();
 
 const addToCartButton = document.getElementById('addToCart');
 addToCartButton.addEventListener('click', addToCart);
+
+const closeConfirmButton = document.getElementById('close');
+closeConfirmButton.addEventListener('click', () => {
+  const confirmationMessage = document.getElementById('confirmation');
+  confirmationMessage.classList.remove('visible');
+});

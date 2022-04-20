@@ -91,8 +91,36 @@
 	box-shadow: rgba(42, 18, 206, 0.9) 0 0 22px 6px;
 }
 
+.item__content__confirmation {
+	position: relative;
+	display: none;
+	margin: 2rem auto 0;
+	width: 25rem;
+	background-color: rgb(142, 233, 142);
+	color: green;
+	text-align: center;
+}
+.item__content__confirmation a {
+	color: green;
+	font-weight: 600;
+}
+.item__content__confirmation.visible {
+	display: block;
+}
 
+.item__content__confirmation .close {
+	position: absolute;
+	top: -0.9rem;
+	right: 0.4rem;
+	cursor: pointer;
+}
 
+.home-link {
+	margin-top: 2.5rem;
+	text-align: center;
+	color: white;
+	font-size: 14px;
+}
 
 
 /***************/
@@ -117,5 +145,11 @@
 @media (max-width: 575.98px) { 
 	.item article {
 		width: 90%;
+	}
+}
+
+@media (max-width: 495px) { 
+	.item__content__confirmation {
+		width: 15rem;
 	}
 }
