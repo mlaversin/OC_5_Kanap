@@ -162,7 +162,7 @@ function changeQuantity(cart) {
 
       let prevItem = cart.find((p) => p.id == itemId && p.color == itemColor);
       console.log(prevItem);
-      prevItem.quantity = newQuantity;
+      prevItem.quantity = Math.abs(newQuantity);
       localStorage.setItem('cart', JSON.stringify(cart));
       location.reload();
     });

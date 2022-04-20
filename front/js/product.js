@@ -103,7 +103,7 @@ function addToCart() {
   let newItem = {
     id: productId,
     color: productColor,
-    quantity: productQuantity,
+    quantity: Math.abs(productQuantity),
   };
 
   let cart = getCart();
