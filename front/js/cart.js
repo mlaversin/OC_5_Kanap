@@ -116,6 +116,14 @@ async function displayItem(item) {
  * @params {Object[]} cart - The list of items you want to display
  */
 async function displayCart(cart) {
+  if (cart == '') {
+    const message = document.getElementById('cart__items');
+    message.textContent =
+      "Vous n'avez pas encore ajouté d'articles dans votre panier.";
+    message.style.textAlign = 'center';
+    message.style.padding = '3rem 0';
+  }
+
   for (let i = 0; i < cart.length; i++) {
     displayItem(cart[i]);
   }
