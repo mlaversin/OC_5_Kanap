@@ -100,31 +100,35 @@ function addToCart() {
   const productColor = document.getElementById('colors').value;
   const productQuantity = parseInt(document.getElementById('quantity').value);
 
-  let newItem = {
-    id: productId,
-    color: productColor,
-    quantity: Math.abs(productQuantity),
-  };
+  if (productQuantity > 0 && productColor) {
+    let newItem = {
+      id: productId,
+      color: productColor,
+      quantity: Math.abs(productQuantity),
+    };
 
-  let cart = getCart();
-  let prevItem = cart.find((p) => p.id == productId && p.color == productColor);
-  if (prevItem != undefined) {
-    newQuantity = parseInt(prevItem.quantity) + parseInt(newItem.quantity);
-    prevItem.quantity = newQuantity;
-  } else {
-    cart.push(newItem);
-  }
-  // Sorting of products for a better display on the cart page
-  cart.sort((a, b) => {
-    if (a.id < b.id) return -1;
-    if (a.id > b.id) return 1;
-    if (a.id == b.id) {
-      if (a.color < b.color) return -1;
-      if (a.color > b.color) return 1;
+    let cart = getCart();
+    let prevItem = cart.find(
+      (p) => p.id == productId && p.color == productColor
+    );
+    if (prevItem != undefined) {
+      newQuantity = parseInt(prevItem.quantity) + parseInt(newItem.quantity);
+      prevItem.quantity = newQuantity;
+    } else {
+      cart.push(newItem);
     }
-    return 0;
-  });
-  saveCart(cart);
+    // Sorting of products for a better display on the cart page
+    cart.sort((a, b) => {
+      if (a.id < b.id) return -1;
+      if (a.id > b.id) return 1;
+      if (a.id == b.id) {
+        if (a.color < b.color) return -1;
+        if (a.color > b.color) return 1;
+      }
+      return 0;
+    });
+    saveCart(cart);
+  }
 }
 
 displayProduct();
