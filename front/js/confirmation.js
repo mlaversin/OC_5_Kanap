@@ -11,10 +11,12 @@ function getOrderId() {
   }
 }
 
-
+/*
+ * Display order id in the confirmation message.
+ */
 function displayOrderId() {
-    const orderId = document.getElementById('orderId');
-    orderId.textContent = getOrderId();
+  const orderId = document.getElementById('orderId');
+  orderId.textContent = getOrderId();
 }
 
 displayOrderId();

@@ -4,12 +4,14 @@
  */
 
 function getValidForm() {
+  // Regex declaration
   const charRegex = new RegExp("^[a-zA-Zâéèêëïöîôç '-]+$");
   const addressRegex = new RegExp("^[0-9a-zA-Zàâäéèêëïîôöùûüç '-]+$");
   const emailRegex = new RegExp(
     '^[a-zA-Z0-9.-_]+[@]{1}[a-zA-Z0-9.-_]+[.]{1}[a-z]{2,10}$'
   );
 
+  // Input verification
   let firstNameValid = false;
   const firstName = document.getElementById('firstName');
   const firstNameErrorMsg = document.getElementById('firstNameErrorMsg');
@@ -72,6 +74,7 @@ function getValidForm() {
     emailValid = true;
   }
 
+  // if all fields are valid, creation and return of the contact object
   if (
     firstNameValid &&
     lastNameValid &&

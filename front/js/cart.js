@@ -4,6 +4,7 @@ import { getValidForm } from './form.js';
  * This file manages :
  *    - displaying products added to the cart
  *    - modifying and deleting products
+ *    - sending the order to the API if the contact form is valid
  */
 
 /*
