@@ -13,9 +13,15 @@ async function getProducts() {
         return res.json().then((data) => data);
       } else {
         console.log('HTTP error with the url ' + res.url);
+        document.getElementById('items').textContent =
+          'Désolé, nous rencontrons actuellement un problème. Merci de revenir plus tard.';
       }
     })
-    .catch((e) => console.log(e));
+    .catch((e) => {
+      console.log(e);
+      document.getElementById('items').textContent =
+        'Désolé, nous rencontrons actuellement un problème. Merci de revenir plus tard.';
+    });
   return data;
 }
 
@@ -24,8 +30,6 @@ async function getProducts() {
  * @params {Object[]} product - The product you want to display
  */
 function displayProduct(product) {
-
-
   let anchor = document.createElement('a');
   document.getElementById('items').appendChild(anchor);
   anchor.href = `./product.html?id=${product._id}`;

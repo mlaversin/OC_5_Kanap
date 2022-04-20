@@ -29,9 +29,16 @@ async function getProduct(productId) {
         return res.json().then((data) => data);
       } else {
         console.log('HTTP error with the url ' + res.url);
+        document.getElementById('item').textContent =
+          'Désolé, nous rencontrons actuellement un problème. Merci de revenir plus tard.';
       }
     })
-    .catch((e) => console.log(e));
+    .catch((e) => {
+      console.log(e);
+      document.getElementById('item').textContent =
+        'Désolé, nous rencontrons actuellement un problème. Merci de revenir plus tard.';
+    });
+
   return data;
 }
 
