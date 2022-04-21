@@ -27,7 +27,7 @@ async function getProduct(productId) {
 
 /*
  * Get cart information from LocalStorage.
- * @rturns {Object[]} cart - The list of items in the cart
+ * @returns {Object[]} cart - The list of items in the cart
  */
 function getCart() {
   let cart = localStorage.getItem('cart');
@@ -136,7 +136,6 @@ async function displayCart(cart) {
 async function getTotalQuantity(cart) {
   let totalQuantity = 0;
   for (let i = 0; i < cart.length; i++) {
-    const product = await getProduct(cart[i].id);
     totalQuantity += cart[i].quantity;
   }
   document.getElementById('totalQuantity').textContent = totalQuantity;
