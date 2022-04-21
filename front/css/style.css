@@ -254,7 +254,7 @@ footer .footerSecondary {
     padding: 0;
     line-height: 80px;
   }
-  .menu nav ul a:first-child li {
+  .menu nav ul li:first-child {
     margin-left: 0;
   }
   .items a {
