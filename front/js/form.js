@@ -16,7 +16,7 @@ function getValidForm() {
   const firstName = document.getElementById('firstName');
   const firstNameErrorMsg = document.getElementById('firstNameErrorMsg');
   if (!firstName.value) {
-    firstNameErrorMsg.textContent = 'Ce champ est obigatoire.';
+    firstNameErrorMsg.textContent = 'Ce champ est obligatoire.';
   } else if (!charRegex.test(firstName.value)) {
     firstNameErrorMsg.textContent =
       'Veuillez utiliser uniquement les caractères autorisés.';
@@ -29,7 +29,7 @@ function getValidForm() {
   const lastName = document.getElementById('lastName');
   const lastNameErrorMsg = document.getElementById('lastNameErrorMsg');
   if (!lastName.value) {
-    lastNameErrorMsg.textContent = 'Ce champ est obigatoire.';
+    lastNameErrorMsg.textContent = 'Ce champ est obligatoire.';
   } else if (!charRegex.test(lastName.value)) {
     lastNameErrorMsg.textContent =
       'Veuillez utiliser uniquement les caractères autorisés.';
@@ -42,7 +42,7 @@ function getValidForm() {
   const address = document.getElementById('address');
   const addressErrorMsg = document.getElementById('addressErrorMsg');
   if (!address.value) {
-    addressErrorMsg.textContent = 'Ce champ est obigatoire.';
+    addressErrorMsg.textContent = 'Ce champ est obligatoire.';
   } else if (!addressRegex.test(address.value)) {
     addressErrorMsg.textContent = 'Veuillez saisir une adresse valide.';
   } else {
@@ -54,7 +54,7 @@ function getValidForm() {
   const city = document.getElementById('city');
   const cityErrorMsg = document.getElementById('cityErrorMsg');
   if (!city.value) {
-    cityErrorMsg.textContent = 'Ce champ est obigatoire.';
+    cityErrorMsg.textContent = 'Ce champ est obligatoire.';
   } else if (!charRegex.test(city.value)) {
     cityErrorMsg.textContent = 'Ce champ comporte une erreur.';
   } else {
@@ -66,7 +66,7 @@ function getValidForm() {
   const email = document.getElementById('email');
   const emailErrorMsg = document.getElementById('emailErrorMsg');
   if (!email.value) {
-    emailErrorMsg.textContent = 'Ce champ est obigatoire.';
+    emailErrorMsg.textContent = 'Ce champ est obligatoire.';
   } else if (!emailRegex.test(email.value)) {
     emailErrorMsg.textContent = 'Veuillez saisir une adresse email valide.';
   } else {
