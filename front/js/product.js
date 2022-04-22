@@ -108,7 +108,7 @@ function addToCart() {
   let productColor = document.getElementById('colors').value;
   let productQuantity = parseInt(document.getElementById('quantity').value);
 
-  if (productQuantity > 0 && productColor) {
+  if (productQuantity > 0 && productQuantity < 101 && productColor) {
     let newItem = {
       id: productId,
       color: productColor,
@@ -129,10 +129,6 @@ function addToCart() {
     cart.sort((a, b) => {
       if (a.id < b.id) return -1;
       if (a.id > b.id) return 1;
-      if (a.id == b.id) {
-        if (a.color < b.color) return -1;
-        if (a.color > b.color) return 1;
-      }
       return 0;
     });
     saveCart(cart);

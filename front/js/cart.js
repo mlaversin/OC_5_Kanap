@@ -168,8 +168,10 @@ function changeQuantity(cart) {
       let prevItem = cart.find((p) => p.id == itemId && p.color == itemColor);
       console.log(prevItem);
       prevItem.quantity = Math.abs(newQuantity);
-      localStorage.setItem('cart', JSON.stringify(cart));
-      location.reload();
+      if (prevItem.quantity > 0 && prevItem.quantity < 101) {
+        localStorage.setItem('cart', JSON.stringify(cart));
+        location.reload();
+      }
     });
   }
 }
@@ -308,7 +310,6 @@ function order(cart) {
       fetch('http://localhost:3000/api/products/order', {
         method: 'POST',
         headers: {
-          Accept: 'application/json',
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(order),
