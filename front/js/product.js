@@ -136,13 +136,13 @@ function addToCart() {
   }
 }
 
-displayProduct();
 
-const addToCartButton = document.getElementById('addToCart');
-addToCartButton.addEventListener('click', addToCart);
 
-const closeConfirmButton = document.getElementById('close');
-closeConfirmButton.addEventListener('click', () => {
-  const confirmationMessage = document.getElementById('confirmation');
-  confirmationMessage.classList.remove('visible');
-});
+function main() {
+  displayProduct();
+
+  const addToCartButton = document.getElementById('addToCart');
+  addToCartButton.addEventListener('click', addToCart);
+}
+
+main();
