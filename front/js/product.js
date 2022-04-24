@@ -29,13 +29,13 @@ async function getProduct(productId) {
         return res.json().then((data) => data);
       } else {
         console.log('HTTP error with the url ' + res.url);
-        document.getElementById('item').textContent =
+        document.querySelector('.item').textContent =
           'Désolé, nous rencontrons actuellement un problème. Merci de revenir plus tard.';
       }
     })
     .catch((e) => {
       console.log(e);
-      document.getElementById('item').textContent =
+      document.querySelector('.item').textContent =
         'Désolé, nous rencontrons actuellement un problème. Merci de revenir plus tard.';
     });
 
@@ -100,7 +100,7 @@ function addToCart() {
   let productColor = document.getElementById('colors').value;
   let productQuantity = parseInt(document.getElementById('quantity').value);
 
-  if (productQuantity > 0 && productQuantity < 101 && productColor) {
+  if (productColor && productQuantity > 0 && productQuantity < 101) {
     let newItem = {
       id: productId,
       color: productColor,
@@ -111,18 +111,23 @@ function addToCart() {
     let prevItem = cart.find(
       (p) => p.id == productId && p.color == productColor
     );
+
     if (prevItem != undefined) {
       newQuantity = parseInt(prevItem.quantity) + parseInt(newItem.quantity);
-      prevItem.quantity = newQuantity;
+      if (newQuantity < 101) {
+        prevItem.quantity = newQuantity;
+      }
     } else {
       cart.push(newItem);
     }
+
     // Sorting of products for a better display on the cart page
     cart.sort((a, b) => {
       if (a.id < b.id) return -1;
       if (a.id > b.id) return 1;
       return 0;
     });
+
     saveCart(cart);
   }
 }

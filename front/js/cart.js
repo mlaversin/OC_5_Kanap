@@ -1,8 +1,8 @@
 /*
  * This file manages 3 things on the Cart page :
- *    - displaying the products added to the cart
- *    - modifying the quantity of a product or removing the product fron the cart
- *    - sending the order to the API if the contact form is valid
+ *    - Displaying the products added to the cart
+ *    - Modifying the quantity of a product or removing the product fron the cart
+ *    - Sending the order to the API if the contact form is valid
  */
 
 /*
@@ -123,7 +123,7 @@ async function displayCart(cart) {
   }
 
   for (let i = 0; i < cart.length; i++) {
-    displayItem(cart[i]);
+    await displayItem(cart[i]);
   }
 }
 
@@ -166,8 +166,8 @@ function changeQuantity(cart) {
       let itemColor = e.target.closest('.cart__item').dataset.color;
 
       let prevItem = cart.find((p) => p.id == itemId && p.color == itemColor);
-      console.log(prevItem);
       prevItem.quantity = Math.abs(newQuantity);
+
       if (prevItem.quantity > 0 && prevItem.quantity < 101) {
         localStorage.setItem('cart', JSON.stringify(cart));
         location.reload();
@@ -270,7 +270,7 @@ function getValidForm() {
     emailValid = true;
   }
 
-  // if all fields are valid, creation and return of the contact object
+  // if all the fields are valid, creation and return of the contact object
   if (
     firstNameValid &&
     lastNameValid &&
@@ -294,7 +294,7 @@ function getValidForm() {
  * Sends a POST request to the API containing the ordered product IDs and customer form data
  * @params {Object[]} cart - The list of items in the cart
  */
-function order(cart) {
+async function order(cart) {
   const orderButton = document.getElementById('order');
   orderButton.addEventListener('click', (e) => {
     e.preventDefault();
@@ -330,7 +330,7 @@ function order(cart) {
 async function main() {
   const cart = getCart();
 
-  displayCart(cart);
+  await displayCart(cart);
 
   await getTotalQuantity(cart);
   await getTotalPrice(cart);
