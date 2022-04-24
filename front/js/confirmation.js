@@ -1,4 +1,8 @@
 /*
+ * This file manages the display of the order ID on the Confirmation page.
+ */
+
+/*
  * Get order id from url.
  * @returns {str} Id of the order to display
  */

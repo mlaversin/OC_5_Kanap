@@ -1,5 +1,5 @@
 /*
- * This file manages the display of all the products on the homepage
+ * This file manages the display of all the products on the Homepage
  */
 
 /*

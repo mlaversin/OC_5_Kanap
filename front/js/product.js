@@ -1,7 +1,7 @@
 /*
  * This file handles two things on the Product page :
- *    - display of product details on the product page
- *    - adding the product to cart
+ *    - Displaying the product details
+ *    - Adding the product to the basket
  */
 
 /*
@@ -93,14 +93,6 @@ function saveCart(cart) {
 }
 
 /*
- * Displays a confirmation message when a product is added to the cart.
- */
-function confirmation() {
-  const confirmationMessage = document.getElementById('confirmation');
-  confirmationMessage.classList.add('visible');
-}
-
-/*
  * Add the product to the cart
  */
 function addToCart() {
@@ -132,11 +124,8 @@ function addToCart() {
       return 0;
     });
     saveCart(cart);
-    confirmation();
   }
 }
-
-
 
 function main() {
   displayProduct();

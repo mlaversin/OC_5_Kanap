@@ -1,7 +1,7 @@
 /*
- * This file manages :
- *    - displaying products added to the cart
- *    - modifying and deleting products
+ * This file manages 3 things on the Cart page :
+ *    - displaying the products added to the cart
+ *    - modifying the quantity of a product or removing the product fron the cart
  *    - sending the order to the API if the contact form is valid
  */
 
@@ -301,7 +301,7 @@ function order(cart) {
 
     const contact = getValidForm();
 
-    if (contact != undefined) {
+    if (cart.length > 0 && contact != undefined) {
       let products = [];
       products = cart.map((p) => p.id);
 
