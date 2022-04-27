@@ -94,6 +94,9 @@ function saveCart(cart) {
   localStorage.setItem('cart', JSON.stringify(cart));
 }
 
+/*
+ * Displays a confirmation message when a product is added to the cart
+ */
 function confirmationMessage() {
   const confirmationMessage = document.getElementById('confirmation');
   confirmationMessage.classList.add('visible');
@@ -105,6 +108,10 @@ function confirmationMessage() {
   });
 }
 
+/*
+ * Displays an error message when adding to cart is impossible
+ * @params {String} The error message to display
+ */
 function errorMessage(message) {
   document.getElementById('error-message').textContent = message;
 

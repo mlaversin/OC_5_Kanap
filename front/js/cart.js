@@ -196,6 +196,10 @@ function deleteItem(cart) {
   }
 }
 
+/*
+ * Displays an error message when the command cannot be sent
+ * @params {String} The error message to display
+ */
 function errorMessage(message) {
   document.getElementById('error-message').textContent = message;
 
@@ -213,7 +217,6 @@ function errorMessage(message) {
  * Checks if contact form fields are present and valid.
  * @returns {Object[]} contact - object represents the customer form data
  */
-
 function getValidForm() {
   // Regex declaration
   const charRegex = new RegExp("^[a-zA-Zâéèêëïöîôç '-]+$");
@@ -303,7 +306,7 @@ function getValidForm() {
 
     return contact;
   } else {
-    errorMessage('Veuillez vérifier les informations saisies');
+    console.log('Au moins un champ du formulaire comporte une erreur.');
   }
 }
 
@@ -322,7 +325,7 @@ async function order(cart) {
       const contact = getValidForm();
 
       if (contact == undefined) {
-        errorMessage('Merci de bien remplir le formulaire');
+        errorMessage('Merci de vérifier le formulaire');
       } else {
         let products = [];
         products = cart.map((p) => p.id);
