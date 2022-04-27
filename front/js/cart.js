@@ -120,10 +120,10 @@ async function displayCart(cart) {
       "Vous n'avez pas encore ajouté d'articles dans votre panier.";
     message.style.textAlign = 'center';
     message.style.padding = '3rem 0';
-  }
-
-  for (let i = 0; i < cart.length; i++) {
-    await displayItem(cart[i]);
+  } else {
+    for (let i = 0; i < cart.length; i++) {
+      await displayItem(cart[i]);
+    }
   }
 }
 
@@ -171,6 +171,8 @@ function changeQuantity(cart) {
       if (prevItem.quantity > 0 && prevItem.quantity < 101) {
         localStorage.setItem('cart', JSON.stringify(cart));
         location.reload();
+      } else {
+        location.reload();
       }
     });
   }
@@ -192,6 +194,19 @@ function deleteItem(cart) {
       location.reload();
     });
   }
+}
+
+function errorMessage(message) {
+  document.getElementById('error-message').textContent = message;
+
+  const errorMessage = document.getElementById('error');
+  errorMessage.classList.add('visible');
+
+  const closeErrorButton = document.getElementById('close');
+  closeErrorButton.addEventListener('click', () => {
+    const errorMessage = document.getElementById('error');
+    errorMessage.classList.remove('visible');
+  });
 }
 
 /*
@@ -287,6 +302,8 @@ function getValidForm() {
     };
 
     return contact;
+  } else {
+    errorMessage('Veuillez vérifier les informations saisies');
   }
 }
 
@@ -299,30 +316,36 @@ async function order(cart) {
   orderButton.addEventListener('click', (e) => {
     e.preventDefault();
 
-    const contact = getValidForm();
+    if (cart.length == 0) {
+      errorMessage('Votre panier est vide');
+    } else {
+      const contact = getValidForm();
 
-    if (cart.length > 0 && contact != undefined) {
-      let products = [];
-      products = cart.map((p) => p.id);
+      if (contact == undefined) {
+        errorMessage('Merci de bien remplir le formulaire');
+      } else {
+        let products = [];
+        products = cart.map((p) => p.id);
 
-      const order = { contact, products };
+        const order = { contact, products };
 
-      fetch('http://localhost:3000/api/products/order', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(order),
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          window.location.href = `./confirmation.html?commande=${data.orderId}`;
+        fetch('http://localhost:3000/api/products/order', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(order),
         })
-        .catch(function (err) {
-          console.log(err);
-        });
+          .then((res) => res.json())
+          .then((data) => {
+            window.location.href = `./confirmation.html?commande=${data.orderId}`;
+          })
+          .catch(function (err) {
+            console.log(err);
+          });
 
-      localStorage.clear();
+        localStorage.clear();
+      }
     }
   });
 }

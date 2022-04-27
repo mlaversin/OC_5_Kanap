@@ -14,6 +14,8 @@ function getProductId() {
   if (searchParams.has('id')) {
     const id = searchParams.get('id');
     return id;
+  } else {
+    window.location.href = './index.html';
   }
 }
 
@@ -92,6 +94,30 @@ function saveCart(cart) {
   localStorage.setItem('cart', JSON.stringify(cart));
 }
 
+function confirmationMessage() {
+  const confirmationMessage = document.getElementById('confirmation');
+  confirmationMessage.classList.add('visible');
+
+  const closeConfirmButton = document.getElementById('close-confirmation');
+  closeConfirmButton.addEventListener('click', () => {
+    const confirmationMessage = document.getElementById('confirmation');
+    confirmationMessage.classList.remove('visible');
+  });
+}
+
+function errorMessage(message) {
+  document.getElementById('error-message').textContent = message;
+
+  const errorMessage = document.getElementById('error');
+  errorMessage.classList.add('visible');
+
+  const closeErrorButton = document.getElementById('close-error');
+  closeErrorButton.addEventListener('click', () => {
+    const errorMessage = document.getElementById('error');
+    errorMessage.classList.remove('visible');
+  });
+}
+
 /*
  * Add the product to the cart
  */
@@ -100,7 +126,11 @@ function addToCart() {
   let productColor = document.getElementById('colors').value;
   let productQuantity = parseInt(document.getElementById('quantity').value);
 
-  if (productColor && productQuantity > 0 && productQuantity < 101) {
+  if (!productColor) {
+    errorMessage('Veuillez sélectionner une couleur.');
+  } else if (productQuantity == 0 || productQuantity > 100) {
+    errorMessage('Vous devez ajouter entre 1 et 100 articles.');
+  } else {
     let newItem = {
       id: productId,
       color: productColor,
@@ -116,6 +146,9 @@ function addToCart() {
       newQuantity = parseInt(prevItem.quantity) + parseInt(newItem.quantity);
       if (newQuantity < 101) {
         prevItem.quantity = newQuantity;
+      } else {
+        errorMessage('Vous pouvez ajouter entre 1 et 100 articles');
+        return;
       }
     } else {
       cart.push(newItem);
@@ -129,6 +162,7 @@ function addToCart() {
     });
 
     saveCart(cart);
+    confirmationMessage();
   }
 }
 

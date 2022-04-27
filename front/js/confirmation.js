@@ -12,6 +12,8 @@ function getOrderId() {
   if (searchParams.has('commande')) {
     const id = searchParams.get('commande');
     return id;
+  } else {
+    window.location.href = './index.html';
   }
 }
 
